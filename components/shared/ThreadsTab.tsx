@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-// import { fetchCommunityPosts } from "@/lib/actions/community.action";
+import { fetchCommunityPosts } from "@/lib/actions/community.actions";
 import { fetchUserPosts } from "@/lib/actions/user.action";
 
 import ThreadCard from "../cards/ThreadCard";
@@ -40,13 +40,12 @@ interface Props {
 
 async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
   let result: Result;
-  result = await fetchUserPosts(accountId);
 
-  // if (accountType === "Community") {
-  //   result = await fetchCommunityPosts(accountId);
-  // } else {
-  //   result = await fetchUserPosts(accountId);
-  // }
+  if (accountType === "Community") {
+    result = await fetchCommunityPosts(accountId);
+  } else {
+    result = await fetchUserPosts(accountId);
+  }
 
   if (!result) {
     redirect("/");
@@ -56,7 +55,6 @@ async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
     <section className='mt-9 flex flex-col gap-10'>
       {result.threads.map((thread) => (
         <ThreadCard
-        community={null}
           key={thread._id}
           id={thread._id}
           currentUserId={currentUserId}
@@ -66,16 +64,16 @@ async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
             accountType === "User"
               ? { name: result.name, image: result.image, id: result.id }
               : {
-                name: thread.author.name,
-                image: thread.author.image,
-                id: thread.author.id,
-              }
+                  name: thread.author.name,
+                  image: thread.author.image,
+                  id: thread.author.id,
+                }
           }
-          // community={
-          //   accountType === "Community"
-          //     ? { name: result.name, id: result.id, image: result.image }
-          //     : thread.community
-          // }
+          community={
+            accountType === "Community"
+              ? { name: result.name, id: result.id, image: result.image }
+              : thread.community
+          }
           createdAt={thread.createdAt}
           comments={thread.children}
         />

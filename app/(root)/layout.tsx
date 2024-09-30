@@ -25,7 +25,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
-        <ClerkProvider >
+        <ClerkProvider
+         appearance={{
+          variables: {
+            colorText: 'white',
+          },
+        }}
+  >
           <TopBar />
 
           <main className="flex flex-row">
