@@ -11,6 +11,7 @@ import TopBar from "@/components/shared/TopBar";
 import LeftSideBar from "@/components/shared/LeftSidebar";
 import RightSidebar from "@/components/shared/RightSidebar";
 import BottomBar from "@/components/shared/BottomBar";
+import { dark } from "@clerk/themes";
 
 export const metadata = {
   title: 'STUCO',
@@ -26,12 +27,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className}`}>
         <ClerkProvider
-         appearance={{
-          variables: {
-            colorText: 'white',
-          },
-        }}
-  >
+          appearance={{
+            baseTheme: dark,
+            variables: {
+              colorText: 'white',
+            },
+          }}
+        >
           <TopBar />
 
           <main className="flex flex-row">

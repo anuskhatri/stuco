@@ -9,7 +9,7 @@ import { fetchThreadById } from "@/lib/actions/thread.actions";
 
 export const revalidate = 0;
 
-async function page({ params }: { params: { id: string } }) {
+async function Page({ params }: { params: { id: string } }) {
   if (!params.id) return null;
 
   const user = await currentUser();
@@ -19,6 +19,8 @@ async function page({ params }: { params: { id: string } }) {
   if (!userInfo?.onboarded) redirect("/onboarding");
 
   const thread = await fetchThreadById(params.id);
+  console.log(thread);
+  
 
   return (
     <section className='relative'>
@@ -63,4 +65,4 @@ async function page({ params }: { params: { id: string } }) {
   );
 }
 
-export default page;
+export default Page;
